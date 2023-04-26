@@ -1,4 +1,4 @@
-import { USER_LOGIN_SUCCESS, USER_LOGIN_FAIL, USER_LOGOUT } from '../type';
+import { USER_LOGIN_SUCCESS, USER_LOGIN_FAILURE, USER_LOGOUT_SUCCESS } from '../type';
 
 
 const initialState = {
@@ -18,14 +18,14 @@ const userReducer = (state = initialState , action ) => {
         error: null,
       };
 
-      case USER_LOGIN_FAIL :
+      case USER_LOGIN_FAILURE :
         return {
             ...state , 
             userInfo :null,
             error : action.payload
         }
 
-        case USER_LOGOUT : 
+        case USER_LOGOUT_SUCCESS : 
         return {
             ...state, 
             userInfo:null,
