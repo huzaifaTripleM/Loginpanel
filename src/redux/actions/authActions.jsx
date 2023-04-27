@@ -1,5 +1,5 @@
-import { auth, db } from '../firebase';
-import * as types from '../constants/actionTypes';
+import { auth,  firestore as db } from '../../services/firebase';
+import * as types from '../type'
 
 export const signUp = (email, password, fullName, phone) => async (dispatch) => {
   try {
@@ -25,22 +25,22 @@ export const signIn = (email, password) => async (dispatch) => {
 export const signOut = () => async (dispatch) => {
   try {
     await auth.signOut();
-    dispatch({ type: types.SIGN_OUT_SUCCESS });
+    dispatch({ type: types.LOGOUT_SUCCESS });
   } catch (error) {
     console.error(error);
-    dispatch({ type: types.SIGN_OUT_FAILURE, payload: error.message });
+    dispatch({ type: types.LOGOUT_FAILURE, payload: error.message });
   }
 };
 
-export const resetPassword = (email) => async (dispatch) => {
-  try {
-    await auth.sendPasswordResetEmail(email);
-    dispatch({ type: types.RESET_PASSWORD_SUCCESS });
-  } catch (error) {
-    console.error(error);
-    dispatch({ type: types.RESET_PASSWORD_FAILURE, payload: error.message });
-  }
-};
+// export const resetPassword = (email) => async (dispatch) => {
+//   try {
+//     await auth.sendPasswordResetEmail(email);
+//     dispatch({ type: types.RESET_PASSWORD_SUCCESS });
+//   } catch (error) {
+//     console.error(error);
+//     dispatch({ type: types.RESET_PASSWORD_FAILURE, payload: error.message });
+//   }
+// };
 
 export const clearAuthError = () => ({
   type: types.CLEAR_AUTH_ERROR,

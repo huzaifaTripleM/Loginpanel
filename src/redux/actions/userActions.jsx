@@ -48,6 +48,9 @@ export const signInWithGoogle = () => async (dispatch) => {
     console.log(error);
   }
 };
+export const getUserDetails= () =>{
+  
+}
 
 export const updateUserProfile = (displayName, photoURL) => async (
   dispatch,

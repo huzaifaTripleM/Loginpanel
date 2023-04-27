@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes as Switch, Route } from 'react-router-d
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import { loadStripe } from '@stripe/react-stripe-js';
-import { FirebaseProvider } from './services/firebase';
+import { firebaseConfig } from './services/firebase';
 import { Elements } from '@stripe/react-stripe-js';
 import PrivateRoute from './components/Auth/privateRoute';
 import Login from './components/Auth/login';
@@ -22,7 +22,7 @@ import './App.css';
 function App() {
   return (
     <Provider store={store}>
-    <FirebaseProvider>
+    <firebaseConfig>
       {/* <Elements stripe={stripePromise}> */}
         <Router>
           <div className="App">
@@ -40,7 +40,7 @@ function App() {
           </div>
         </Router>
       {/* </Elements> */}
-    </FirebaseProvider>
+    </firebaseConfig>
   </Provider>
   );
 }

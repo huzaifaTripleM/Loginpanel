@@ -1,4 +1,4 @@
-import { CREATE_PAYMENT_INTENT } from '../types/paymentTypes';
+import { CREATE_PAYMENT_REQUEST } from '../type';
 import { setLoading } from './appActions';
 import axios from 'axios';
 import { stripe } from '../utils/stripe';
@@ -26,7 +26,7 @@ export const createPaymentIntent = (amount) => async (dispatch) => {
     }
 
     dispatch({
-      type: CREATE_PAYMENT_INTENT,
+      type: CREATE_PAYMENT_REQUEST,
       payload: { client_secret },
     });
   } catch (error) {
@@ -35,3 +35,7 @@ export const createPaymentIntent = (amount) => async (dispatch) => {
     dispatch(setLoading(false));
   }
 };
+
+export const fetchPaymentHistory = ()=>{
+
+}
