@@ -2,9 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Routes as Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './redux/store';
-import { loadStripe } from '@stripe/react-stripe-js';
-import { firebaseConfig } from './services/firebase';
-import { Elements } from '@stripe/react-stripe-js';
 import PrivateRoute from './components/Auth/privateRoute';
 import Login from './components/Auth/login';
 import Register from './components/Auth/Register'
@@ -23,23 +20,23 @@ function App() {
   return (
     <Provider store={store}>
     <firebaseConfig>
-      {/* <Elements stripe={stripePromise}> */}
-        <Router>
-          <div className="App">
-            <AppHeader />
-            <Switch>
-              <Route exact path="/" component={Login} />
-              <Route path="/register" component={Register} />
-              <PrivateRoute path="/user-profile" component={UserProfile} />
-              <PrivateRoute path="/payment-form" component={PaymentForm} />
-              <PrivateRoute path="/review" component={Review} />
-              <PrivateRoute path="/payment-history" component={PaymentHistory} />
-              <PrivateRoute path="/dashboard-user-profile" component={DashboardUserProfile} />
-            </Switch>
-            <AppFooter />
-          </div>
-        </Router>
-      {/* </Elements> */}
+      <Router>
+        <div className="App">
+          <AppHeader />
+          <Switch>
+            <Route exact path="/" element={Login} />
+            <Route path="/register" element={Register} />
+
+              <Route path="/user-profile" element={<PrivateRoute> <UserProfile/> </PrivateRoute>}></Route>
+              <Route path="/payment-form" element={<PrivateRoute> <PaymentForm/> </PrivateRoute>} />
+              <Route path="/review" element={<PrivateRoute> <Review/> </PrivateRoute>} />
+              <Route path="/payment-history" element={<PrivateRoute> <PaymentHistory/> </PrivateRoute>} />
+              <Route path="/dashboard-user-profile" element={<PrivateRoute> <DashboardUserProfile/> </PrivateRoute>} />
+ 
+          </Switch>
+          <AppFooter />
+        </div>
+      </Router>
     </firebaseConfig>
   </Provider>
   );
