@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes as Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import PrivateRoute from './components/Auth/privateRoute';
@@ -18,27 +18,31 @@ import './App.css';
 
 function App() {
   return (
-    <Provider store={store}>
-    <firebaseConfig>
-      <Router>
-        <div className="App">
-          <AppHeader />
-          <Switch>
-            <Route exact path="/" element={Login} />
-            <Route path="/register" element={Register} />
-
-              <Route path="/user-profile" element={<PrivateRoute> <UserProfile/> </PrivateRoute>}></Route>
-              <Route path="/payment-form" element={<PrivateRoute> <PaymentForm/> </PrivateRoute>} />
-              <Route path="/review" element={<PrivateRoute> <Review/> </PrivateRoute>} />
-              <Route path="/payment-history" element={<PrivateRoute> <PaymentHistory/> </PrivateRoute>} />
-              <Route path="/dashboard-user-profile" element={<PrivateRoute> <DashboardUserProfile/> </PrivateRoute>} />
+    <>
  
-          </Switch>
-          <AppFooter />
-        </div>
-      </Router>
-    </firebaseConfig>
-  </Provider>
+    <PaymentForm/>
+   
+    </>
+  //   <Provider store={store}>
+  //   <firebaseConfig>
+  //     <Router>
+  //       <div className="App">
+  //         <AppHeader />
+  //         <Routes>
+  //           <Route exact path="/" element={Login} />
+  //           <Route path="/register" element={Register} />
+  //           <Route path="/user-profile" element={<PrivateRoute> <UserProfile/> </PrivateRoute>}></Route>
+  //           <Route path="/payment-form" element={<PrivateRoute> <PaymentForm/> </PrivateRoute>} />
+  //           <Route path="/review" element={<PrivateRoute> <Review/> </PrivateRoute>} />
+  //           <Route path="/payment-history" element={<PrivateRoute> <PaymentHistory/> </PrivateRoute>} />
+  //           <Route path="/dashboard-user-profile" element={<PrivateRoute> <DashboardUserProfile/> </PrivateRoute>} />
+ 
+  //         </Routes>
+  //         <AppFooter />
+  //       </div>
+  //     </Router>
+  //   </firebaseConfig>
+  // </Provider>
   );
 }
 

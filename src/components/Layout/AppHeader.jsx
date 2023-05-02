@@ -2,92 +2,136 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { signOut } from '../../redux/actions/authActions';
+import { AppBar, Toolbar, Typography, Button, IconButton, Menu, MenuItem } from '@material-ui/core';
+import { AccountCircle } from '@material-ui/icons';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+    minHeight: '100vh',
+    backgroundImage: 'url(https://picsum.photos/1920/1080)',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+  },
+  grow: {
+    flexGrow: 1,
+  },
+  title: {
+    display: 'none',
+    [theme.breakpoints.up('sm')]: {
+      display: 'block',
+    },
+  },
+  button: {
+    margin: theme.spacing(1),
+  },
+}));
 
 const AppHeader = () => {
+  const classes = useStyles();
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const currentUser = useSelector(state => state.auth.currentUser);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
 
   const handleSignOut = () => {
     dispatch(signOut());
   };
 
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
-    <header className="app-header">
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <Link className="navbar-brand" to="/">
-          My App
-        </Link>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ml-auto">
+    <div className={classes.grow}>
+      <div className={classes.root}  >
+      <AppBar position="static">
+        <Toolbar>
+          <Typography className={classes.title} variant="h6" noWrap>
+            My App
+          </Typography>
+          <div className={classes.grow} />
+          <div>
             {isAuthenticated ? (
               <>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/dashboard">
-                    Dashboard
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/checkout">
-                    Checkout
-                  </Link>
-                </li>
-                <li className="nav-item dropdown">
-                  <button
-                    className="nav-link dropdown-toggle btn btn-link"
-                    type="button"
-                    id="userDropdownMenuButton"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    {currentUser.email}
-                  </button>
-                  <div
-                    className="dropdown-menu dropdown-menu-right"
-                    aria-labelledby="userDropdownMenuButton"
-                  >
-                    <Link className="dropdown-item" to="/user-profile">
-                      My Profile
-                    </Link>
-                    <button
-                      className="dropdown-item"
-                      onClick={handleSignOut}
-                    >
-                      Logout
-                    </button>
-                  </div>
-                </li>
+                <Button
+                  component={Link}
+                  to="/dashboard"
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                >
+                  Dashboard
+                </Button>
+                <Button
+                  component={Link}
+                  to="/checkout"
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                >
+                  Checkout
+                </Button>
+                <IconButton
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleMenu}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={open}
+                  onClose={handleClose}
+                >
+                  <MenuItem component={Link} to="/user-profile" onClick={handleClose}>My Profile</MenuItem>
+                  <MenuItem onClick={handleSignOut}>Logout</MenuItem>
+                </Menu>
               </>
             ) : (
               <>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/login">
-                    Login
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/register">
-                    Register
-                  </Link>
-                </li>
+                <Button
+                  component={Link}
+                  to="/login"
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                >
+                  Login
+                </Button>
+                <Button
+                  component={Link}
+                  to="/register"
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                >
+                  Register
+                </Button>
               </>
             )}
-          </ul>
-        </div>
-      </nav>
-    </header>
+          </div>
+        </Toolbar>
+      </AppBar>
+      </div>
+    </div>
   );
 };
 
