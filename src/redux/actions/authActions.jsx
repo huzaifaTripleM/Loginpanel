@@ -1,9 +1,13 @@
-import { auth,  firestore as db } from '../../services/firebase';
+import {  firestore as db } from '../../services/firebase';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
 import * as types from '../type'
 
 export const signUp = (email, password, fullName, phone) => async (dispatch) => {
+  console.log('in dispatch')
   try {
-    const { user } = await auth.createUserWithEmailAndPassword(email, password);
+    const auth = getAuth();
+    const { user } = await createUserWithEmailAndPassword(auth,email, password);
     await db.collection('users').doc(user.uid).set({ fullName, phone });
     dispatch({ type: types.SIGN_UP_SUCCESS });
   } catch (error) {
@@ -14,7 +18,7 @@ export const signUp = (email, password, fullName, phone) => async (dispatch) => 
 
 export const signIn = (email, password) => async (dispatch) => {
   try {
-    await auth.signInWithEmailAndPassword(email, password);
+  //  await auth.signInWithEmailAndPassword(email, password);
     dispatch({ type: types.SIGN_IN_SUCCESS });
   } catch (error) {
     console.error(error);
@@ -24,7 +28,7 @@ export const signIn = (email, password) => async (dispatch) => {
 
 export const signOut = () => async (dispatch) => {
   try {
-    await auth.signOut();
+ //   await auth.signOut();
     dispatch({ type: types.LOGOUT_SUCCESS });
   } catch (error) {
     console.error(error);

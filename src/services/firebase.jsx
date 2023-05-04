@@ -1,8 +1,10 @@
 
-import { getAuth } from 'firebase/auth'
-import {getFirestore} from 'firebase/firestore'
-import  {initializeApp} from "firebase/app"
+//import { getAuth } from 'firebase/auth'
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
+import app from 'firebase/compat/app';
+import 'firebase/compat/firestore'
 
+import 'firebase/compat/auth'
 
 export const firebaseConfig = {
   apiKey: "AIzaSyBM1q2KgG7kRP7H31WxMVivNoKM_l7b3cI",
@@ -14,10 +16,8 @@ export const firebaseConfig = {
   measurementId: "G-R1PM8MN485"
 };
 
-const app = initializeApp(firebaseConfig);
-
+const firebase = app.initializeApp(firebaseConfig)
+const firestore = firebase.firestore()
 const auth = getAuth();
-const firestore = getFirestore(app);
 
-export { auth , firestore, app }
-export default firestore
+export { firebase, firestore, auth, createUserWithEmailAndPassword};
